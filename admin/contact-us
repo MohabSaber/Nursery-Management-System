@@ -1,0 +1,23 @@
+?php session_start();
+
+include('includes/config.php');
+
+if(strlen($_SESSION['aid'])==0)
+  { 
+header('location:index.php');
+}
+else{
+
+if(isset($_POST['submit']))
+{
+$email=$_POST['email'];
+ $mobnum=$_POST['mobnum'];
+ $pagetitle=$_POST['pagetitle'];
+$pagedes=$con->real_escape_string($_POST['pagedes']);
+ $query=mysqli_query($con,"update tblpage set PageTitle='$pagetitle',PageDescription='$pagedes',Email='$email',MobileNumber='$mobnum' where  PageType='contactus'");
+if ($query) {
+echo '<script>alert("Contact Us has been updated.")</script>';
+}else{
+echo '<script>alert("Something Went Wrong. Please try again.")</script>';
+}}
+?>
