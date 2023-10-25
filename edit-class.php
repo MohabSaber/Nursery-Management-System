@@ -1,15 +1,15 @@
 <?php session_start();
-// Database Connection
+
 include('includes/config.php');
-//Validating Session
+
 if(strlen($_SESSION['aid'])==0)
   { 
 header('location:index.php');
 }
 else{
-// Code for update the class details
+
 if(isset($_POST['Update'])){
-//Getting Post Values  
+
 $tid=$_POST['teacher'];
 $cname=$_POST['classname'];
 $agegroup=$_POST['agegroup'];
@@ -48,21 +48,21 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
   <link rel="stylesheet" href="../plugins/bs-stepper/css/bs-stepper.min.css">
   <!-- dropzonejs -->
   <link rel="stylesheet" href="../plugins/dropzone/min/dropzone.min.css">
-  <!-- Theme style -->
+ 
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  <!-- Navbar -->
+  
 <?php include_once("includes/navbar.php");?>
-  <!-- /.navbar -->
+ 
 
-  <!-- Main Sidebar Container -->
+ 
  <?php include_once("includes/sidebar.php");?>
 
-  <!-- Content Wrapper. Contains page content -->
+ 
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
+    
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -76,21 +76,21 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
             </ol>
           </div>
         </div>
-      </div><!-- /.container-fluid -->
+      </div>
     </section>
 
-    <!-- Main content -->
+   
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <!-- left column -->
+         
           <div class="col-md-8">
-            <!-- general form elements -->
+           
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Class Info</h3>
               </div>
-              <!-- /.card-header -->
+             
 <?php $cid=intval($_GET['cid']);
 $query=mysqli_query($con,"select tblteachers.fullName as teachername,tblteachers.id as tid,tblclasses.*,tblclasses.id as classid from tblclasses
 join tblteachers on tblteachers.id=tblclasses.teacherId where tblclasses.id='$cid'");
@@ -100,11 +100,11 @@ while($result=mysqli_fetch_array($query)){
 
 
 
-              <!-- form start -->
+             
               <form name="addlawyer" method="post" enctype="multipart/form-data">
                 <div class="card-body">
 
-<!-- Teacher--->
+
    <div class="form-group">
                     <label for="exampleInputFullname">Teacher</label>
                     <select class="form-control" id="teacher" name="teacher" required>
@@ -117,13 +117,13 @@ while($row=mysqli_fetch_array($query)){
 
 </select>
                   </div>
-<!--   Class---->
+
                   <div class="form-group">
                     <label for="exampleInputEmail1">Class name</label>
                     <input type="text" class="form-control" id="classname" name="classname" placeholder="Class name e.g: Drawing, Dnace, Fun" value="<?php echo $result['className'];?>" required>
                   </div>
 
-<!--Age Group---->
+
 <div class="form-group">
 <label for="text">Age Group</label>
 <select class="form-control" id="agegroup" name="agegroup"  required>
@@ -136,7 +136,7 @@ while($row=mysqli_fetch_array($query)){
 </select>
 </div>
 
-<!--Time---->
+
 <div class="form-group">
 <label for="text">Class Timing</label>
 <select class="form-control" id="classtiming" name="classtiming"  required>
@@ -153,7 +153,7 @@ while($row=mysqli_fetch_array($query)){
 </select>
 </div>
 
-<!--Capacity---->
+
 <div class="form-group">
 <label for="text">Capacity</label>
 <select class="form-control" id="capacity" name="capacity"  required>
@@ -175,7 +175,7 @@ while($row=mysqli_fetch_array($query)){
 
 
 
-  <!--Class Pic---->
+
   <div class="form-group">
                     <label for="exampleInputFile">Profile Pic </label>
                <img src="classpic/<?php echo $result['feacturePic']?>" width="120">
