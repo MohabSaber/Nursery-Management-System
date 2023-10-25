@@ -30,3 +30,15 @@ else
 $newprofilepic=md5($profilepic).time().$extension;
 // Code for move image into directory
 move_uploaded_file($_FILES["teacherpic"]["tmp_name"],"classpic/".$newprofilepic);
+$query=mysqli_query($con,"update tblclasses set feacturePic='$newprofilepic' where id='$cid'");
+if($query){
+unlink($oldprofilepic);  
+echo "<script>alert('Class pic updated successfully.');</script>";
+echo "<script type='text/javascript'> document.location = 'manage-classes.php'; </script>";
+} else {
+echo "<script>alert('Something went wron. Please try again.');</script>";
+}
+}
+}
+
+  ?>
