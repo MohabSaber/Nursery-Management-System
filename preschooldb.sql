@@ -128,6 +128,51 @@ INSERT INTO `tblvisitor` (`id`, `gurdianName`, `gurdianEmail`, `childName`, `chi
 (1, 'Omar', 'omar@gmail.com', 'mohamed', '2-3 Year', 'I want to visit the school for my son.', 'Visited the school. they want to enroll their 2 year old daughter.', 'Visited', '2023-03-24T10:30', '2023-03-20 01:55:18', '2023-03-21 03:22:20'),
 (2, 'Yassin', 'Yassin@test.com', 'ahmed', '3-4 Year', 'NA', NULL, NULL, '2023-03-23T12:30', '2023-03-21 03:59:58', NULL);
 
+ALTER TABLE `tbladmin`
+  ADD PRIMARY KEY (`ID`);
+
+
+ALTER TABLE `tblclasses`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `tblenrollment`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `tblpage`
+  ADD PRIMARY KEY (`ID`);
+
+
+ALTER TABLE `tblteachers`
+  ADD PRIMARY KEY (`id`);
+
+
+
+
+
+ALTER TABLE `tbladmin`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+
+ALTER TABLE `tblclasses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+
+ALTER TABLE `tblenrollment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+
+ALTER TABLE `tblpage`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+
+ALTER TABLE `tblteachers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+
+COMMIT;
+
 
 
 
