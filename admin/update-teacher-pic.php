@@ -112,3 +112,39 @@ $query=mysqli_query($con,"select teacherPic,id from tblteachers where id='$tid'"
 while($result=mysqli_fetch_array($query))
 {
 ?>
+<!--  Current Profile Pic--->
+<div class="form-group">
+                    <label for="exampleInputFullname">Current Profile Pic</label>
+       <img src="teacherspic/<?php echo $result['teacherPic']?>" width="200">
+                  </div>
+
+<?php } ?>
+  <!--Profile Pic---->
+  <div class="form-group">
+                    <label for="exampleInputFile">New Profile Pic <span style="font-size:12px;color:red;">(Only jpg / jpeg/ png /gif format allowed)</span></label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="hidden" name="currentprofilepic" value="<?php echo $result['teacherPic'];?>">
+                        <input type="file" class="custom-file-input" id="profilepic" name="profilepic" required="true">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                      <div class="input-group-append">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                    </div>
+                  </div>
+
+      
+
+      <div class="card-footer" align="center">
+                  <button type="submit" class="btn btn-primary" name="submit" id="submit">Update</button>
+                </div>
+
+
+                </div>
+                <!-- /.card-body -->
+          
+            </div>
+            <!-- /.card -->
+          </div>
+          <!--/.col (left) -->
