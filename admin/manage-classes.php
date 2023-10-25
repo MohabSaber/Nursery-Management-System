@@ -73,5 +73,39 @@ else{<?php session_start();
            </ol>
          </div>
        </div>
-     </div><!-- /.container-fluid -->
+     </div><
    </section>
+   <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+        
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Classes Details</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Class Pic</th>
+                    <th>Teacher Name</th>
+                    <th>Class Name</th>
+                    <th>Age Group</th>
+                    <th>Class Timing</th>
+                    <th>Capacity</th>
+                    <th>Reg. Date</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+<?php $query=mysqli_query($con,"select tblteachers.fullName,tblclasses.*,tblclasses.id as classid from tblclasses
+join tblteachers on tblteachers.id=tblclasses.teacherId");
+$cnt=1;
+while($result=mysqli_fetch_array($query)){
+?>
