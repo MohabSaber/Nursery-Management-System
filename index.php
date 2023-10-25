@@ -35,14 +35,13 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
 <?php include_once('includes/header.php');?>
 
-        <!-- Carousel Start -->
+
         <div class="container-fluid p-0 mb-5">
             <div class="owl-carousel header-carousel position-relative">
                 <div class="owl-carousel-item position-relative">
@@ -100,10 +99,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
             </div>
         </div>
  
-        <!-- Carousel End -->
 
-
-        <!-- Facilities Start -->
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
@@ -162,15 +158,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
                 </div>
             </div>
         </div>
-        <!-- Facilities End -->
 
-
-        
-
-
-
-
-        <!-- Classes Start -->
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
@@ -225,10 +213,7 @@ while($result=mysqli_fetch_array($query)){
                 </div>
             </div>
         </div>
-        <!-- Classes End -->
 
-
-        <!-- Appointment Start -->
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="bg-light rounded">
@@ -304,24 +289,13 @@ while($result=mysqli_fetch_array($query)){
                 </div>
             </div>
         </div>
-        <!-- Appointment End -->
 
-
-   
-
- 
-
-
-        <!-- Footer Start -->
      <?php include_once('includes/footer.php');?>
-        <!-- Footer End -->
 
-
-        <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-    <!-- JavaScript Libraries -->
+ 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>
@@ -329,7 +303,6 @@ while($result=mysqli_fetch_array($query)){
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
 
