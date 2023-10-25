@@ -9,18 +9,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@600&family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
     
-    <!-- Icon Font Stylesheet -->
+   
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
+    
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
+    
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
+    
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -28,7 +28,7 @@
  <?php include_once('includes/header.php');?>
 
 
-        <!-- Page Header End -->
+       
         <div class="container-xxl py-5 page-header position-relative mb-5">
             <div class="container py-5">
                 <h1 class="display-2 text-white animated slideInDown mb-4">About Us</h1>
@@ -41,10 +41,10 @@
                 </nav>
             </div>
         </div>
-        <!-- Page Header End -->
+        
 
 
-        <!-- About Start -->
+       
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-5 align-items-center">
@@ -74,7 +74,7 @@ while($data=mysqli_fetch_array($sql)){
                 </div>
             </div>
         </div>
-        <!-- About End -->
+        
 
 
 
