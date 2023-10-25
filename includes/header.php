@@ -5,10 +5,8 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-        <!-- Spinner End -->
 
 
-        <!-- Navbar Start -->
         <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5 py-lg-0">
             <a href="index.php" class="navbar-brand">
                 <h1 class="m-0 text-primary"><img src="img/logo-1.jpg"  width="70" height="70"></h1>
