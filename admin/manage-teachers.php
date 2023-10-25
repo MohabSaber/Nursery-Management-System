@@ -70,3 +70,35 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
         </div>
       </div><!-- /.container-fluid -->
     </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+        
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">teachersDetails</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Profile Pic</th>
+                    <th>Full Name</th>
+                    <th>Email ID</th>
+                    <th>Mobile Number</th>
+                    <th>Subject</th>
+                    <th>Reg. Date</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+<?php $query=mysqli_query($con,"select * from tblteachers");
+$cnt=1;
+while($result=mysqli_fetch_array($query)){
+?>
