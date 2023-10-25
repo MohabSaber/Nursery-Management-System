@@ -91,3 +91,25 @@ echo "<script>alert('Something went wron. Please try again.');</script>";
         </div>
       </div><!-- /.container-fluid -->
     </section>
+   <!-- Main content -->
+   <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Profile Picture</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form name="addlawyer" method="post" enctype="multipart/form-data">
+                <div class="card-body">
+
+<?php 
+$cid=intval($_GET['cid']);
+$query=mysqli_query($con,"select feacturePic,id from tblclasses where id='$cid'");
+while($result=mysqli_fetch_array($query))
+{
+?>
