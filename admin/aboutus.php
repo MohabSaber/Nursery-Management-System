@@ -91,4 +91,35 @@ while ($row=mysqli_fetch_array($ret)) {
     <input type="text" class="form-control" name="pagetitle" value="<?php  echo $row['PageTitle'];?>" required='true'>
                   </div>
 
+  <div class="form-group">
+                    <label for="exampleInputFullname">Page Description</label>
+  <textarea  name="pagedes" class="form-control" required='true' cols="140" rows="10"><?php  echo $row['PageDescription'];?></textarea>
+                  </div>
+<?php } ?>
+
+                </div>
+              
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" name="submit" id="submit">Submit</button>
+                </div>
+              </form>
+            </div>
+       
+
+        
+       
+          </div>
+     
   
+        </div>
+    
+      </div>
+    </section>
+
+  </div>
+
+<?php include_once('includes/footer.php');?>
+
+</div>
+
+
