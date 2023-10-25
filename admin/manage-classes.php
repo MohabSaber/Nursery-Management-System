@@ -109,3 +109,57 @@ join tblteachers on tblteachers.id=tblclasses.teacherId");
 $cnt=1;
 while($result=mysqli_fetch_array($query)){
 ?>
+
+<tr>
+<td><?php echo $cnt;?></td>
+<td><img src="classpic/<?php echo $result['feacturePic']?>" width="80"></td>
+<td><?php echo $result['fullName']?></td>
+<td><?php echo $result['className']?></td>
+<td><?php echo $result['ageGroup']?></td>
+<td><?php echo $result['classTiming']?></td>
+<td><?php echo $result['capacity']?></td>
+<td><?php echo $result['postingDate']?></td>
+<th>
+<a href="edit-class.php?cid=<?php echo $result['classid'];?>" title="Edit Class Details"> <i class="fa fa-edit" aria-hidden="true"></i> </a> | 
+<a href="manage-classes.php?action=delete&&cid=<?php echo $result['classid']; ?>&&tpic=<?php echo $result['teacherPic'];?>" style="color:red;" title="Delete this record" onclick="return confirm('Do you really want to delete this record?');"><i class="fa fa-trash" aria-hidden="true"></i> </a>
+</th>
+</tr>
+<?php $cnt++;} ?>
+
+</tbody>
+<tfoot>
+<tr>
+<th>#</th>
+<th>Class Pic</th>
+<th>Teacher Name</th>
+<th>Class Name</th>
+<th>Age Group</th>
+<th>Class Timing</th>
+<th>Capacity</th>
+<th>Reg. Date</th>
+<th>Action</th>
+</tr>
+</tfoot>
+</table>
+</div>
+<!-- /.card-body -->
+</div>
+<!-- /.card -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<?php include_once('includes/footer.php');?>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+<!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
+</div>
