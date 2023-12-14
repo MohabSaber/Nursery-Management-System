@@ -1,27 +1,45 @@
-<?php include_once('includes/config.php');
- if(isset($_POST['submit'])){
-$fname=$_POST['fathername'];
-$mname=$_POST['mothername'];
-$pmobno=$_POST['parentmobno'];
-$pemail=$_POST['parentemail'];
-$cname=$_POST['cname'];
-$agegroup=$_POST['agegroup'];
-$erollprogram=$_POST['erollprogram'];
-$message=$_POST['message'];
-$enrollno=mt_rand(100000000,999999999);
+<?php
+include_once('includes/config.php');
 
+class Enrollment {
+    private $con;
 
-$query=mysqli_query($con,"insert into tblenrollment(enrollmentNumber,fatherName,motherName,parentmobNo,parentEmail,childName,childAge,enrollProgram,message) values('$enrollno','$fname','$mname','$pmobno','$pemail','$cname','$agegroup','$erollprogram','$message')");
-if($query){
-echo "<script>alert('Enrollment Details sent successfully.');</script>";
-echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
-} else {
-echo "<script>alert('Something went wrong. Please try again.');</script>";
+    public function __construct($con) {
+        $this->con = $con;
+    }
+
+    public function addEnrollmentDetails() {
+        if (isset($_POST['submit'])) {
+            $fname = $_POST['fathername'];
+            $mname = $_POST['mothername'];
+            $pmobno = $_POST['parentmobno'];
+            $pemail = $_POST['parentemail'];
+            $cname = $_POST['cname'];
+            $agegroup = $_POST['agegroup'];
+            $erollprogram = $_POST['erollprogram'];
+            $message = $_POST['message'];
+            $enrollno = mt_rand(100000000, 999999999);
+
+            $query = mysqli_query(
+                $this->con,
+                "INSERT INTO tblenrollment(enrollmentNumber, fatherName, motherName, parentmobNo, parentEmail, childName, childAge, enrollProgram, message) 
+                VALUES('$enrollno','$fname','$mname','$pmobno','$pemail','$cname','$agegroup','$erollprogram','$message')"
+            );
+
+            if ($query) {
+                echo "<script>alert('Enrollment Details sent successfully.');</script>";
+                echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
+            } else {
+                echo "<script>alert('Something went wrong. Please try again.');</script>";
+            }
+        }
+    }
 }
 
- }
-
+$enrollment = new Enrollment($con);
+$enrollment->addEnrollmentDetails();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,23 +49,23 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    
+    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@600&family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
     
-    
+    <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    
+    <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    
+    <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-   
+    <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -55,7 +73,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
  <?php include_once('includes/header.php');?>
 
 
-       
+        <!-- Page Header End -->
         <div class="container-xxl py-5 page-header position-relative mb-5">
             <div class="container py-5">
                 <h1 class="display-2 text-white animated slideInDown mb-4">Child Enrollment</h1>
@@ -71,7 +89,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
         <!-- Page Header End -->
 
 
-       
+        <!-- Appointment Start -->
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="bg-light rounded">
@@ -161,26 +179,25 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
                         </div>
                         <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
                             <div class="position-relative h-100">
-                                <img class="position-absolute w-100 h-100 rounded" src="img/appointment.jpg" style="object-fit: cover;">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-       
+        <!-- Appointment End -->
 
 
-       
+        <!-- Footer Start -->
             <?php include_once('includes/footer.php');?>       
-             
+             <!-- Footer End -->
 
 
-       
+        <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-   
+    <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>
@@ -188,7 +205,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    
+    <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
 
