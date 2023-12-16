@@ -1,6 +1,60 @@
+<?php
+session_start();
 
+class ClassManager {
+    private $con;
 
-  <!DOCTYPE html>
+    public function __construct($dbConnection) {
+        $this->con = $dbConnection;
+    }
+
+    public function addClass($tid, $cname, $agegroup, $classtiming, $capacity, $addedby, $profilepic) {
+        $extension = substr($profilepic, strlen($profilepic)-4, strlen($profilepic));
+        $allowed_extensions = array(".jpg", "jpeg", ".png", ".gif");
+
+        if (!in_array($extension, $allowed_extensions)) {
+            return 'Invalid format. Only jpg / jpeg/ png /gif format allowed';
+        } else {
+            $newprofilepic = md5($profilepic) . time() . $extension;
+            move_uploaded_file($_FILES["profilepic"]["tmp_name"], "classpic/" . $newprofilepic);
+
+            $query = mysqli_query($this->con, "INSERT INTO tblclasses(teacherId, className, ageGroup, classTiming, capacity, feacturePic, addedBy) VALUES ('$tid','$cname','$agegroup','$classtiming','$capacity','$newprofilepic','$addedby')");
+
+            return $query ? 'Class added successfully.' : 'Something went wrong. Please try again.';
+        }
+    }
+}
+
+// Database Connection
+include('includes/config.php');
+
+if (strlen($_SESSION['aid']) == 0) {
+    header('location:index.php');
+    exit();
+} else {
+    // Creating an instance of ClassManager
+    $classManager = new ClassManager($con);
+
+    if (isset($_POST['submit'])) {
+        $tid = $_POST['teacher'];
+        $cname = $_POST['classname'];
+        $agegroup = $_POST['agegroup'];
+        $classtiming = $_POST['classtiming'];
+        $capacity = $_POST['capacity'];
+        $addedby = $_SESSION['uname'];
+        $profilepic = $_FILES["profilepic"]["name"];
+
+        // Adding class using the ClassManager object
+        $result = $classManager->addClass($tid, $cname, $agegroup, $classtiming, $capacity, $addedby, $profilepic);
+        echo "<script>alert('$result');</script>";
+        if ($result === 'Class added successfully.') {
+            echo "<script type='text/javascript'> document.location = 'add-class.php'; </script>";
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -10,7 +64,7 @@
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-
+  <!-- Select2 -->
   <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
   <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!-- Bootstrap4 Duallistbox -->
@@ -24,15 +78,16 @@
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-
+  <!-- Navbar -->
 <?php include_once("includes/navbar.php");?>
+  <!-- /.navbar -->
 
-
+  <!-- Main Sidebar Container -->
  <?php include_once("includes/sidebar.php");?>
 
-
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-
+    <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -46,24 +101,26 @@
             </ol>
           </div>
         </div>
-      </div>
+      </div><!-- /.container-fluid -->
     </section>
 
-  
+    <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-   
+          <!-- left column -->
           <div class="col-md-8">
-      
+            <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Persoanl Info</h3>
               </div>
-            
+              <!-- /.card-header -->
+              <!-- form start -->
               <form name="addlawyer" method="post" enctype="multipart/form-data">
                 <div class="card-body">
 
+<!-- Teacher--->
    <div class="form-group">
                     <label for="exampleInputFullname">Teacher</label>
                     <select class="form-control" id="teacher" name="teacher" required>
@@ -76,12 +133,12 @@ while($row=mysqli_fetch_array($query)){
 
 </select>
                   </div>
-
+<!--   Class---->
                   <div class="form-group">
                     <label for="exampleInputEmail1">Class name</label>
                     <input type="text" class="form-control" id="classname" name="classname" placeholder="Class name e.g: Drawing, Dnace, Fun" required>
                   </div>
-
+<!--Age Group---->
 <div class="form-group">
 <label for="text">Age Group</label>
 <select class="form-control" id="agegroup" name="agegroup"  required>
@@ -94,7 +151,7 @@ while($row=mysqli_fetch_array($query)){
 </select>
 </div>
 
-
+<!--Time---->
 <div class="form-group">
 <label for="text">Class Timing</label>
 <select class="form-control" id="classtiming" name="classtiming"  required>
@@ -111,7 +168,7 @@ while($row=mysqli_fetch_array($query)){
 </select>
 </div>
 
-
+<!--Capacity---->
 <div class="form-group">
 <label for="text">Capacity</label>
 <select class="form-control" id="capacity" name="capacity"  required>
@@ -133,7 +190,7 @@ while($row=mysqli_fetch_array($query)){
 
 
 
-
+  <!--Class Pic---->
   <div class="form-group">
                     <label for="exampleInputFile">Class Pic <span style="font-size:12px;color:red;">(Only jpg / jpeg/ png /gif format allowed)</span></label>
                     <div class="input-group">
@@ -151,12 +208,12 @@ while($row=mysqli_fetch_array($query)){
                 </div>
       
                 </div>
-             
+                <!-- /.card-body -->
           
             </div>
-      
+            <!-- /.card -->
           </div>
-     
+          <!--/.col (left) -->
 
 
 
@@ -170,36 +227,38 @@ while($row=mysqli_fetch_array($query)){
        
   
         </div>
-   
-      </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
     </section>
-
+    <!-- /.content -->
   </div>
-
+  <!-- /.content-wrapper -->
 <?php include_once('includes/footer.php');?>
 
 </div>
+<!-- ./wrapper -->
 
+<!-- jQuery -->
 <script src="../plugins/jquery/jquery.min.js"></script>
-
+<!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+<!-- bs-custom-file-input -->
 <script src="../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-
+<!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
-
+<!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
-
+<!-- Page specific script -->
 <script src="../plugins/select2/js/select2.full.min.js"></script>
 <script>
 $(function () {
   bsCustomFileInput.init();
 });
   $(function () {
-   
+    //Initialize Select2 Elements
     $('.select2').select2()
 
-   
+    //Initialize Select2 Elements
     $('.select2bs4').select2({
       theme: 'bootstrap4'
     })
@@ -207,4 +266,4 @@ $(function () {
 </script>
 </body>
 </html>
-<?php } ?>
+<?php ?>
