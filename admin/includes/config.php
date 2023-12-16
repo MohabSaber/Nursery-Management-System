@@ -23,3 +23,11 @@ class Timezone {
         date_default_timezone_set($timezone);
     }
 }
+
+// Usage
+$database = new Database();
+$connection = $database->getConnection();
+
+$timezoneHandler = new Timezone();
+$timezoneHandler->setTimezone('Africa/Cairo');
+?>
