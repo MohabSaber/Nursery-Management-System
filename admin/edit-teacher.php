@@ -18,7 +18,17 @@ $teacherid=intval($_GET['tid']);
 
 
 
+$query=mysqli_query($con,"update tblteachers set fullName='$fname',teacherEmail='$email',teacherMobileNo='$mobileno',teacherSubject='$tsubject' where id='$teacherid'");
+if($query){
+echo "<script>alert('Teacher details updated successfully.');</script>";
+echo "<script type='text/javascript'> document.location = 'manage-teachers.php'; </script>";
+} else {
+echo "<script>alert('Something went wrong. Please try again.');</script>";
+}
+}
 
+
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
