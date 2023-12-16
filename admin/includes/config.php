@@ -1,9 +1,25 @@
 <?php
-date_default_timezone_set('Africa/Cairo');
+class Database {
+    private $host = "localhost";
+    private $username = "root";
+    private $password = "";
+    private $database = "preschooldb";
+    private $connection;
 
-$con=mysqli_connect("localhost","root","","preschooldb");
-if(mysqli_connect_errno()){
-echo "Connection Fail".mysqli_connect_error();
+    public function __construct() {
+        $this->connection = mysqli_connect($this->host, $this->username, $this->password, $this->database);
+        if (mysqli_connect_errno()) {
+            echo "Connection Fail" . mysqli_connect_error();
+        }
+    }
+
+    public function getConnection() {
+        return $this->connection;
+    }
 }
 
-  ?>
+class Timezone {
+    public function setTimezone($timezone) {
+        date_default_timezone_set($timezone);
+    }
+}
