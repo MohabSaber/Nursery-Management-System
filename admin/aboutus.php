@@ -1,4 +1,54 @@
+<?php
+session_start();
 
+class AboutUsPage {
+    private $con;
+
+    public function __construct($dbConnection) {
+        $this->con = $dbConnection;
+    }
+
+    public function updateAboutContent($pagetitle, $pagedes) {
+        $pagedes = $this->con->real_escape_string($pagedes);
+        $query = mysqli_query($this->con, "UPDATE tblpage SET PageTitle='$pagetitle', PageDescription='$pagedes' WHERE PageType='aboutus'");
+        
+        return $query ? 'About Us has been updated.' : 'Something Went Wrong. Please try again.';
+    }
+
+    public function getAboutContent() {
+        $content = array();
+        $query = mysqli_query($this->con, "SELECT * FROM tblpage WHERE PageType='aboutus'");
+
+        while ($row = mysqli_fetch_array($query)) {
+            $content['pageTitle'] = $row['PageTitle'];
+            $content['pageDescription'] = $row['PageDescription'];
+        }
+
+        return $content;
+    }
+}
+
+// Database Connection
+include('includes/config.php');
+
+// Validating Session
+if (strlen($_SESSION['aid']) == 0) {
+    header('location:index.php');
+    exit();
+} else {
+    // Creating an instance of AboutUsPage
+    $aboutPage = new AboutUsPage($con);
+
+    // Code for updating About Us content
+    if (isset($_POST['submit'])) {
+        $pagetitle = $_POST['pagetitle'];
+        $pagedes = $_POST['pagedes'];
+
+        // Updating About Us content using the AboutUsPage object
+        $result = $aboutPage->updateAboutContent($pagetitle, $pagedes);
+        echo "<script>alert('$result');</script>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,13 +57,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PreSchool Enrollment System  | About us</title>
 
-
+  <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
-
+  <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
-
+  <!--Function Email Availabilty---->
 <script src="nic.js" type="text/javascript"></script>
 <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
 </head>
@@ -21,16 +71,16 @@
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-
+  <!-- Navbar -->
 <?php include_once("includes/navbar.php");?>
+  <!-- /.navbar -->
 
-
-
+  <!-- Main Sidebar Container -->
  <?php include_once("includes/sidebar.php");?>
 
-
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-
+    <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -44,21 +94,22 @@
             </ol>
           </div>
         </div>
-      </div>
+      </div><!-- /.container-fluid -->
     </section>
 
-
+    <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-   
+          <!-- left column -->
           <div class="col-md-8">
-        
+            <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">Fill the Info</h3>
               </div>
-            
+              <!-- /.card-header -->
+              <!-- form start -->
               <form name="subadmin" method="post">
                 <div class="card-body">
 <?php
@@ -66,44 +117,47 @@ $ret=mysqli_query($con,"select * from  tblpage where PageType='aboutus'");
 $cnt=1;
 while ($row=mysqli_fetch_array($ret)) {
 ?>
-
+<!--Page Title--->
    <div class="form-group">
                     <label for="exampleInputFullname">Page Title</label>
     <input type="text" class="form-control" name="pagetitle" value="<?php  echo $row['PageTitle'];?>" required='true'>
                   </div>
 
-  <div class="form-group">
+      
+<!--Description--->
+   <div class="form-group">
                     <label for="exampleInputFullname">Page Description</label>
   <textarea  name="pagedes" class="form-control" required='true' cols="140" rows="10"><?php  echo $row['PageDescription'];?></textarea>
                   </div>
 <?php } ?>
 
                 </div>
-              
+                <!-- /.card-body -->
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary" name="submit" id="submit">Submit</button>
                 </div>
               </form>
             </div>
-       
+            <!-- /.card -->
 
         
        
           </div>
-     
+          <!--/.col (left) -->
   
         </div>
-    
-      </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
     </section>
-
+    <!-- /.content -->
   </div>
-
+  <!-- /.content-wrapper -->
 <?php include_once('includes/footer.php');?>
 
 </div>
+<!-- ./wrapper -->
 
-  <!-- jQuery -->
+<!-- jQuery -->
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -122,6 +176,4 @@ $(function () {
 </script>
 </body>
 </html>
-<?php } ?>
-
-
+<?php ?>
