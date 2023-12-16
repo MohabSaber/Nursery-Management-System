@@ -17,6 +17,27 @@ class ContactUsUpdater {
         return $query ? 'Contact Us has been updated.' : 'Something Went Wrong. Please try again.';
     }
 }
+// Database Connection
+include('includes/config.php');
+
+if (strlen($_SESSION['aid']) == 0) {
+    header('location:index.php');
+    exit();
+} else {
+    // Creating an instance of ContactUsUpdater
+    $contactUpdater = new ContactUsUpdater($con);
+
+    if (isset($_POST['submit'])) {
+        $email = $_POST['email'];
+        $mobnum = $_POST['mobnum'];
+        $pagetitle = $_POST['pagetitle'];
+        $pagedes = $_POST['pagedes'];
+
+        // Updating Contact Us content using the ContactUsUpdater object
+        $result = $contactUpdater->updateContactUs($email, $mobnum, $pagetitle, $pagedes);
+        echo "<script>alert('$result');</script>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
