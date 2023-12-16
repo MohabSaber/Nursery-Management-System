@@ -7,4 +7,18 @@ class UsernameChecker {
     public function __construct($dbConnection) {
         $this->con = $dbConnection;
     }
-
+    public function checkUsernameAvailability($username) {
+        if (!empty($username)) {
+            $uname = mysqli_real_escape_string($this->con, $username);
+            $query = mysqli_query($this->con, "SELECT AdminuserName FROM tbladmin WHERE AdminuserName='$uname'");
+            $row = mysqli_num_rows($query);
+            
+            if ($row > 0) {
+                return "<span style='color:red'> Username already exists. Try with another username</span>";
+            } else {
+                return "<span style='color:green'> Username available for Registration.</span>";
+            }
+        }
+        return '';
+    }
+}
