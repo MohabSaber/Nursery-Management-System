@@ -1,23 +1,4 @@
-<?php session_start();
-// Database Connection
-include('includes/config.php');
-//Validating Session
-if(strlen($_SESSION['aid'])==0)
-  { 
-header('location:index.php');
-}
-else{
-// Code for update the about us content
-if(isset($_POST['submit']))
-  {
-$pagetitle=$_POST['pagetitle'];
-$pagedes=$con->real_escape_string($_POST['pagedes']);
-$query=mysqli_query($con,"update tblpage set PageTitle='$pagetitle',PageDescription='$pagedes' where  PageType='aboutus'");
-if ($query) {
-echo '<script>alert("About Us has been updated.")</script>';
-}else{
-echo '<script>alert("Something Went Wrong. Please try again.")</script>';
-}}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
