@@ -1,3 +1,23 @@
+<?php session_start();
+// Database Connection
+include('includes/config.php');
+//Validating Session
+if(strlen($_SESSION['aid'])==0)
+  { 
+header('location:index.php');
+}
+else{
+// Code for update teacher details
+if(isset($_POST['submit'])){
+//Getting Post Values  
+$fname=$_POST['fullname'];
+$email=$_POST['emailid'];
+$mobileno=$_POST['mobilenumber'];
+$tsubject=$_POST['tsubject'];
+$teacherid=intval($_GET['tid']);
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
