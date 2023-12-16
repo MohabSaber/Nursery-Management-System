@@ -16,31 +16,7 @@ class ClassDetailsUpdater {
     }
 }
 
-if (strlen($_SESSION['aid']) == 0) {
-    header('location:index.php');
-    exit();
-} else {
-    if (isset($_POST['Update'])) {
-        $classDetailsUpdater = new ClassDetailsUpdater($con);
 
-        $tid = $_POST['teacher'];
-        $cname = $_POST['classname'];
-        $agegroup = $_POST['agegroup'];
-        $classtiming = $_POST['classtiming'];
-        $capacity = $_POST['capacity'];
-        $classid = intval($_GET['cid']);
-
-        $queryResult = $classDetailsUpdater->updateClassDetails($tid, $cname, $agegroup, $classtiming, $capacity, $classid);
-
-        if ($queryResult) {
-            echo "<script>alert('Class updated successfully.');</script>";
-            echo "<script type='text/javascript'> document.location = 'manage-classes.php'; </script>";
-        } else {
-            echo "<script>alert('Something went wrong. Please try again.');</script>";
-        }
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
