@@ -1,4 +1,61 @@
+<?php
+session_start();
 
+class TeacherHandler {
+    private $con;
+
+    public function __construct($dbConnection) {
+        $this->con = $dbConnection;
+    }
+    public function addTeacher($fullname, $email, $mobileno, $tsubject, $addedby, $profilepic) {
+        $extension = substr($profilepic, strlen($profilepic) - 4, strlen($profilepic));
+        $allowed_extensions = array(".jpg", "jpeg", ".png", ".gif");
+
+        if (!in_array($extension, $allowed_extensions)) {
+            return 'Invalid format. Only jpg / jpeg / png / gif format allowed';
+        } else {
+            $newprofilepic = md5($profilepic) . time() . $extension;
+            move_uploaded_file($_FILES["profilepic"]["tmp_name"], "teacherspic/" . $newprofilepic);
+
+            $query = mysqli_query($this->con, "INSERT INTO tblteachers(fullName, teacherEmail, teacherMobileNo, teacherSubject, teacherPic, AddedBy) VALUES ('$fullname', '$email', '$mobileno', '$tsubject', '$newprofilepic', '$addedby')");
+
+            if ($query) {
+                return 'Teacher added successfully.';
+            } else {
+                return 'Something went wrong. Please try again.';
+            }
+        }
+    }
+}
+// Database Connection
+include('includes/config.php');
+
+// Validating Session
+if (strlen($_SESSION['aid']) == 0) {
+    header('location:index.php');
+    exit(); // Make sure to exit after redirecting
+} else {
+    // Creating an instance of TeacherHandler
+    $teacherHandler = new TeacherHandler($con);
+
+    // Code for Add New Teacher
+    if (isset($_POST['submit'])) {
+        // Getting Post Values  
+        $fname = $_POST['fullname'];
+        $email = $_POST['emailid'];
+        $mobileno = $_POST['mobilenumber'];
+        $tsubject = $_POST['tsubject'];
+        $addedby = $_SESSION['uname'];
+        $profilepic = $_FILES["profilepic"]["name"];
+
+        // Adding a teacher using the TeacherHandler object
+        $result = $teacherHandler->addTeacher($fname, $email, $mobileno, $tsubject, $addedby, $profilepic);
+
+        echo "<script>alert('$result');</script>";
+        echo "<script type='text/javascript'> document.location = 'add-teacher.php'; </script>";
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -158,11 +215,7 @@ $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()
 
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-});
+
 </script>
 </body>
 </html>
