@@ -22,3 +22,10 @@ class UsernameChecker {
         return '';
     }
 }
+// Using the UsernameChecker class
+if (isset($_POST["username"])) {
+    $usernameChecker = new UsernameChecker($con);
+    $username = $_POST["username"];
+    echo $usernameChecker->checkUsernameAvailability($username);
+}
+?>
