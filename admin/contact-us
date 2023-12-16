@@ -1,25 +1,22 @@
-?php session_start();
+<?php
+session_start();
+class ContactUsUpdater {
+    private $con;
 
-include('includes/config.php');
+    public function __construct($dbConnection) {
+        $this->con = $dbConnection;
+    }
 
-if(strlen($_SESSION['aid'])==0)
-  { 
-header('location:index.php');
+    public function updateContactUs($email, $mobnum, $pagetitle, $pagedes) {
+        $email = mysqli_real_escape_string($this->con, $email);
+        $mobnum = mysqli_real_escape_string($this->con, $mobnum);
+        $pagedes = $this->con->real_escape_string($pagedes);
+        
+        $query = mysqli_query($this->con, "UPDATE tblpage SET PageTitle='$pagetitle', PageDescription='$pagedes', Email='$email', MobileNumber='$mobnum' WHERE PageType='contactus'");
+        
+        return $query ? 'Contact Us has been updated.' : 'Something Went Wrong. Please try again.';
+    }
 }
-else{
-
-if(isset($_POST['submit']))
-{
-$email=$_POST['email'];
- $mobnum=$_POST['mobnum'];
- $pagetitle=$_POST['pagetitle'];
-$pagedes=$con->real_escape_string($_POST['pagedes']);
- $query=mysqli_query($con,"update tblpage set PageTitle='$pagetitle',PageDescription='$pagedes',Email='$email',MobileNumber='$mobnum' where  PageType='contactus'");
-if ($query) {
-echo '<script>alert("Contact Us has been updated.")</script>';
-}else{
-echo '<script>alert("Something Went Wrong. Please try again.")</script>';
-}}
 ?>
 <!DOCTYPE html>
 <html lang="en">
