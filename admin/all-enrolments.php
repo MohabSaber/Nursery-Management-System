@@ -101,4 +101,104 @@ if (strlen($_SESSION['aid']) == 0) {
                   </tr>
                   </thead>
                   <tbody>
+                  <?php $query=mysqli_query($con,"select * from tblenrollment");
+$cnt=1;
+while($result=mysqli_fetch_array($query)){
+?>
 
+                  <tr>
+                    <td><?php echo $cnt;?></td>
+                    <td><?php echo $result['enrollmentNumber']?></td>
+                    <td><?php echo $result['fatherName']?>/<?php echo $result['motherName']?></td>
+                    <td><?php echo $result['parentmobNo']?>/<?php echo $result['parentEmail']?></td>
+                   <td><?php echo $result['childName']?></td>
+                   <td><?php echo $result['childAge']?></td>
+                    <td><?php echo $result['enrollProgram']?></td>
+                    <td><?php echo $result['postingDate']?></td>
+                    <th>
+     <a href="enrollment-details.php?enrollid=<?php echo $result['id'];?>" title="View Details" class="btn btn-primary btn-xm"> View Details</a> 
+ </th>
+                  </tr>
+         <?php $cnt++;} ?>
+             
+                  </tbody>
+                  <tfoot>
+   <tr>
+                    <th>#</th>
+                    <th>Enrollment No</th>
+                    <th>Father Name/MotherName</th>
+                    <th>Parent Mob/Email</th>
+                    <th>Child Name</th>
+                    <th>Child Age Group</th>
+                    <th>Program Enroll For</th>
+                    <th>Posting Date</th>
+                    <th>Action</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+<?php include_once('includes/footer.php');?>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../plugins/jszip/jszip.min.js"></script>
+<script src="../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+</body>
+</html>
+<?php } ?>
