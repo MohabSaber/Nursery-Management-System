@@ -99,3 +99,89 @@ if (strlen($_SESSION['aid']) != 0) {
     while ($result = mysqli_fetch_array($subAdminDetails)) {
 
 ?>
+
+      <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Update  the Info</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form name="subadmin" method="post">
+                <div class="card-body">
+<!-- Username-->
+    <div class="form-group">
+                    <label for="exampleInputusername">Username (used for login)</label>
+               <input type="text"   name="sadminusername" id="sadminusername" class="form-control" value="<?php echo $result['AdminuserName'];?>" readonly>
+                  </div>
+<!-- Subadmin Full Name--->
+   <div class="form-group">
+                    <label for="exampleInputFullname">Full Name</label>
+                    <input type="text" class="form-control" id="fullname" name="fullname" value="<?php echo $result['AdminName'];?>" placeholder="Enter Sub-Admin Full Name" required>
+                  </div>
+<!-- Sub admin Email---->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="emailid" name="emailid" placeholder="Enter email" required value="<?php echo $result['Email'];?>">
+                  </div>
+<!-- Sub admin Contact Number---->
+                  <div class="form-group">
+                    <label for="text">Mobile Number</label>
+                    <input type="text" class="form-control" id="mobilenumber" name="mobilenumber" placeholder="Enter email" pattern="[0-9]{10}" title="10 numeric characters only" required value="<?php echo $result['MobileNumber'];?>">
+                  </div>
+
+<<<<<<< HEAD
+<?php } }?>
+      
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" name="update" id="update">Update</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+
+        
+       
+          </div>
+          <!--/.col (left) -->
+  
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+<?php include_once('includes/footer.php');?>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- bs-custom-file-input -->
+<script src="../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script>
+$(function () {
+  bsCustomFileInput.init();
+});
+</script>
+</body>
+</html>
+<?php ?>
+
