@@ -1,47 +1,53 @@
+<<<<<<< HEAD
 <?php
 session_start();
 error_reporting(0);
+// Database Connection
 include('includes/config.php');
 
-class TeacherManager {
+class SubAdminManager {
     private $con;
 
-    public function __construct($con) {
-        $this->con = $con;
+    public function __construct($dbConnection) {
+        $this->con = $dbConnection;
     }
 
-    public function deleteTeacher() {
-        if (strlen($_SESSION['aid']) == 0) {
-            header('location:index.php');
-        } else {
-            if ($_GET['action'] == 'delete') {
-                $lid = intval($_GET['tid']);
-                $profilepic = $_GET['profilepic'];
-                $ppicpath = "teacherspic" . "/" . $profilepic;
-                
-                $query = mysqli_query($this->con, "delete from tblteachers where id='$lid'");
-                if ($query) {
-                    unlink($ppicpath);
-                    echo "<script>alert('Teacher details deleted successfully.');</script>";
-                    echo "<script type='text/javascript'> document.location = 'manage-teachers.php'; </script>";
-                } else {
-                    echo "<script>alert('Something went wrong. Please try again.');</script>";
-                }
-            }
-        }
+    public function deleteSubAdmin($subAdminId) {
+        $query = mysqli_query($this->con, "DELETE FROM tbladmin WHERE ID='$subAdminId'");
+        return $query;
+    }
+
+    public function getAllSubAdmins() {
+        $query = mysqli_query($this->con, "SELECT * FROM tbladmin WHERE UserType=0");
+        return $query;
     }
 }
 
-$teacherManager = new TeacherManager($con);
-$teacherManager->deleteTeacher();
-?>
+// Validating Session
+if (strlen($_SESSION['aid']) == 0) {
+    header('location:index.php');
+} else {
+    $subAdminManager = new SubAdminManager($con);
 
+    // Code for deleting the sub-admin
+    if ($_GET['action'] == 'delete') {
+        $subAdminId = intval($_GET['said']);
+        $deleted = $subAdminManager->deleteSubAdmin($subAdminId);
+
+        if ($deleted) {
+            echo "<script>alert('Sub admin record deleted successfully.');</script>";
+            echo "<script type='text/javascript'> document.location = 'manage-subadmins.php'; </script>";
+        } else {
+            echo "<script>alert('Something went wrong. Please try again.');</script>";
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PreSchool Enrollment System  | Manage Teachers</title>
+  <title>PreSchool Enrollment System | Manage Sub Admins</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -69,12 +75,12 @@ $teacherManager->deleteTeacher();
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Manage teachers</h1>
+            <h1>Manage Sub Admins</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Manage Teachers</li>
+              <li class="breadcrumb-item active">Manage Sub Admins</li>
             </ol>
           </div>
         </div>
@@ -91,7 +97,7 @@ $teacherManager->deleteTeacher();
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">teachersDetails</h3>
+                <h3 class="card-title">Sub Admin Details</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -99,45 +105,42 @@ $teacherManager->deleteTeacher();
                   <thead>
                   <tr>
                     <th>#</th>
-                    <th>Profile Pic</th>
+                    <th>Username</th>
                     <th>Full Name</th>
                     <th>Email ID</th>
                     <th>Mobile Number</th>
-                    <th>Subject</th>
                     <th>Reg. Date</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-<?php $query=mysqli_query($con,"select * from tblteachers");
+<?php $query=mysqli_query($con,"select * from tbladmin where UserType=0");
 $cnt=1;
 while($result=mysqli_fetch_array($query)){
 ?>
 
                   <tr>
                     <td><?php echo $cnt;?></td>
-                    <td><img src="teacherspic/<?php echo $result['teacherPic']?>" width="80"></td>
-                    <td><?php echo $result['fullName']?></td>
-                   <td><?php echo $result['teacherEmail']?></td>
-                   <td><?php echo $result['teacherMobileNo']?></td>
-                    <td><?php echo $result['teacherSubject']?></td>
-                    <td><?php echo $result['regDate']?></td>
+                    <td><?php echo $result['AdminuserName']?></td>
+                    <td><?php echo $result['AdminName']?></td>
+                   <td><?php echo $result['Email']?></td>
+                    <td><?php echo $result['MobileNumber']?></td>
+                    <td><?php echo $result['AdminRegdate']?></td>
                     <th>
-     <a href="edit-teacher.php?tid=<?php echo $result['id'];?>" title="Edit Sub Admin Details"> <i class="fa fa-edit" aria-hidden="true"></i> </a> | 
-     <a href="manage-teachers.php?action=delete&&tid=<?php echo $result['id']; ?>&&profilepic=<?php echo $result['teacherPic'];?>" style="color:red;" title="Delete this record" onclick="return confirm('Do you really want to delete this record?');"><i class="fa fa-trash" aria-hidden="true"></i> </a>
- </th>
+     <a href="edit-subadmin.php?said=<?php echo $result['ID'];?>" title="Edit Sub Admin Details"> <i class="fa fa-edit" aria-hidden="true"></i> </a>
+     <a href="manage-subadmins.php?action=delete&&said=<?php echo $result['ID']; ?>" style="color:red;" title="Delete this record" onclick="return confirm('Do you really want to delete this record?');"><i class="fa fa-trash" aria-hidden="true"></i> </a>
+     <a href="reset-subadmin-pwd.php?said=<?php echo $result['ID']; ?>" title="Reset Sub Admin Password"> <i class="fa fa-key" aria-hidden="true"></i></a></th>
                   </tr>
-         <?php $cnt++;} ?>
+         <?php } ?>
              
                   </tbody>
                   <tfoot>
-                  <tr>
-                    <th>#</th>
-                    <th>Profile Pic</th>
+                <tr>
+                  <th>#</th>
+                    <th>Username</th>
                     <th>Full Name</th>
                     <th>Email ID</th>
                     <th>Mobile Number</th>
-                    <th>Subject</th>
                     <th>Reg. Date</th>
                     <th>Action</th>
                   </tr>
@@ -208,4 +211,4 @@ while($result=mysqli_fetch_array($query)){
 </script>
 </body>
 </html>
-<?php ?>
+<?php } ?>

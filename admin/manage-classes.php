@@ -1,30 +1,41 @@
-<?php session_start();
+<?php
+session_start();
 error_reporting(0);
 
 include('includes/config.php');
 
-if(strlen($_SESSION['aid'])==0)
-  { 
-header('location:index.php');
-}
-else{
-if($_GET['action']=='delete'){
-$cid=intval($_GET['cid']);
-$tpic=$_GET['teacherpic'];
-$tpicpath="classpic"."/".$tpic;
-$query=mysqli_query($con,"delete from tblclasses where id='$cid'");
-if($query){
-unlink($tpicpath);
-echo "<script>alert('Class details deleted successfully.');</script>";
-echo "<script type='text/javascript'> document.location = 'manage-classes.php'; </script>";
-} else {
-echo "<script>alert('Something went wrong. Please try again.');</script>";
+class ClassManager {
+    private $con;
+
+    public function __construct($con) {
+        $this->con = $con;
+    }
+
+    public function deleteClass() {
+        if (strlen($_SESSION['aid']) == 0) {
+            header('location:index.php');
+        } else {
+            if ($_GET['action'] == 'delete') {
+                $cid = intval($_GET['cid']);
+                $tpic = $_GET['teacherpic'];
+                $tpicpath = "classpic" . "/" . $tpic;
+                
+                $query = mysqli_query($this->con, "delete from tblclasses where id='$cid'");
+                if ($query) {
+                    unlink($tpicpath);
+                    echo "<script>alert('Class details deleted successfully.');</script>";
+                    echo "<script type='text/javascript'> document.location = 'manage-classes.php'; </script>";
+                } else {
+                    echo "<script>alert('Something went wrong. Please try again.');</script>";
+                }
+            }
+        }
+    }
 }
 
-}
-
-
-  ?>
+$classManager = new ClassManager($con);
+$classManager->deleteClass();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,9 +45,9 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
-
+  <!-- DataTables -->
   <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
@@ -47,12 +58,13 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 <div class="wrapper">
   <!-- Navbar -->
 <?php include_once("includes/navbar.php");?>
-  
+  <!-- /.navbar -->
+
  <?php include_once("includes/sidebar.php");?>
 
-  
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-
+    <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -66,10 +78,10 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
             </ol>
           </div>
         </div>
-</div>
+      </div><!-- /.container-fluid -->
     </section>
 
-
+    <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -81,7 +93,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
               <div class="card-header">
                 <h3 class="card-title">Classes Details</h3>
               </div>
-
+              <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
@@ -136,33 +148,34 @@ while($result=mysqli_fetch_array($query)){
                   </tfoot>
                 </table>
               </div>
-
+              <!-- /.card-body -->
             </div>
-    
+            <!-- /.card -->
           </div>
-      
+          <!-- /.col -->
         </div>
-       
+        <!-- /.row -->
       </div>
- 
+      <!-- /.container-fluid -->
     </section>
-
+    <!-- /.content -->
   </div>
-
+  <!-- /.content-wrapper -->
 <?php include_once('includes/footer.php');?>
 
-
+  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
-
+    <!-- Control sidebar content goes here -->
   </aside>
-
+  <!-- /.control-sidebar -->
 </div>
+<!-- ./wrapper -->
 
-
-
+<!-- jQuery -->
 <script src="../plugins/jquery/jquery.min.js"></script>
-
+<!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
 <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -175,8 +188,11 @@ while($result=mysqli_fetch_array($query)){
 <script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+<!-- Page specific script -->
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -196,4 +212,4 @@ while($result=mysqli_fetch_array($query)){
 </script>
 </body>
 </html>
-<?php } ?>
+<?php ?>

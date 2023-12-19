@@ -1,47 +1,37 @@
+<<<<<<< HEAD
 <?php
 session_start();
 error_reporting(0);
+// Database Connection
 include('includes/config.php');
 
-class TeacherManager {
+class EnrollmentManager {
     private $con;
 
-    public function __construct($con) {
-        $this->con = $con;
+    public function __construct($dbConnection) {
+        $this->con = $dbConnection;
     }
 
-    public function deleteTeacher() {
-        if (strlen($_SESSION['aid']) == 0) {
-            header('location:index.php');
-        } else {
-            if ($_GET['action'] == 'delete') {
-                $lid = intval($_GET['tid']);
-                $profilepic = $_GET['profilepic'];
-                $ppicpath = "teacherspic" . "/" . $profilepic;
-                
-                $query = mysqli_query($this->con, "delete from tblteachers where id='$lid'");
-                if ($query) {
-                    unlink($ppicpath);
-                    echo "<script>alert('Teacher details deleted successfully.');</script>";
-                    echo "<script type='text/javascript'> document.location = 'manage-teachers.php'; </script>";
-                } else {
-                    echo "<script>alert('Something went wrong. Please try again.');</script>";
-                }
-            }
-        }
+    public function getNewEnrollments() {
+        $query = mysqli_query($this->con, "SELECT * FROM tblenrollment WHERE (enrollStatus IS NULL OR enrollStatus = '')");
+        return $query;
     }
 }
 
-$teacherManager = new TeacherManager($con);
-$teacherManager->deleteTeacher();
-?>
+// Validating Session
+if (strlen($_SESSION['aid']) == 0) {
+    header('location:index.php');
+} else {
+  $enrollmentManager = new EnrollmentManager($con);
 
+
+  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PreSchool Enrollment System  | Manage Teachers</title>
+  <title>PreSchool Enrollment System  | New Enrollments</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -69,12 +59,12 @@ $teacherManager->deleteTeacher();
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Manage teachers</h1>
+            <h1>New Enrollments</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Manage Teachers</li>
+              <li class="breadcrumb-item active">New Enrollments</li>
             </ol>
           </div>
         </div>
@@ -91,7 +81,7 @@ $teacherManager->deleteTeacher();
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">teachersDetails</h3>
+                <h3 class="card-title">Enrollment Details</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -99,46 +89,49 @@ $teacherManager->deleteTeacher();
                   <thead>
                   <tr>
                     <th>#</th>
-                    <th>Profile Pic</th>
-                    <th>Full Name</th>
-                    <th>Email ID</th>
-                    <th>Mobile Number</th>
-                    <th>Subject</th>
-                    <th>Reg. Date</th>
+                    <th>Enrollment No</th>
+                    <th>Father Name/MotherName</th>
+                    <th>Parent Mob/Email</th>
+                    <th>Child Name</th>
+                    <th>Child Age Group</th>
+                    <th>Program Enroll For</th>
+                    <th>Posting Date</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-<?php $query=mysqli_query($con,"select * from tblteachers");
-$cnt=1;
-while($result=mysqli_fetch_array($query)){
+<<<<<<< HEAD
+<?php   $newEnrollments = $enrollmentManager->getNewEnrollments();
+  $cnt = 1;
+  while ($result = mysqli_fetch_array($newEnrollments)) {
 ?>
 
                   <tr>
                     <td><?php echo $cnt;?></td>
-                    <td><img src="teacherspic/<?php echo $result['teacherPic']?>" width="80"></td>
-                    <td><?php echo $result['fullName']?></td>
-                   <td><?php echo $result['teacherEmail']?></td>
-                   <td><?php echo $result['teacherMobileNo']?></td>
-                    <td><?php echo $result['teacherSubject']?></td>
-                    <td><?php echo $result['regDate']?></td>
+                    <td><?php echo $result['enrollmentNumber']?></td>
+                    <td><?php echo $result['fatherName']?>/<?php echo $result['motherName']?></td>
+                    <td><?php echo $result['parentmobNo']?>/<?php echo $result['parentEmail']?></td>
+                   <td><?php echo $result['childName']?></td>
+                   <td><?php echo $result['childAge']?></td>
+                    <td><?php echo $result['enrollProgram']?></td>
+                    <td><?php echo $result['postingDate']?></td>
                     <th>
-     <a href="edit-teacher.php?tid=<?php echo $result['id'];?>" title="Edit Sub Admin Details"> <i class="fa fa-edit" aria-hidden="true"></i> </a> | 
-     <a href="manage-teachers.php?action=delete&&tid=<?php echo $result['id']; ?>&&profilepic=<?php echo $result['teacherPic'];?>" style="color:red;" title="Delete this record" onclick="return confirm('Do you really want to delete this record?');"><i class="fa fa-trash" aria-hidden="true"></i> </a>
+     <a href="enrollment-details.php?enrollid=<?php echo $result['id'];?>" title="View Details" class="btn btn-primary btn-xm"> View Details</a> 
  </th>
                   </tr>
          <?php $cnt++;} ?>
              
                   </tbody>
                   <tfoot>
-                  <tr>
+   <tr>
                     <th>#</th>
-                    <th>Profile Pic</th>
-                    <th>Full Name</th>
-                    <th>Email ID</th>
-                    <th>Mobile Number</th>
-                    <th>Subject</th>
-                    <th>Reg. Date</th>
+                    <th>Enrollment No</th>
+                    <th>Father Name/MotherName</th>
+                    <th>Parent Mob/Email</th>
+                    <th>Child Name</th>
+                    <th>Child Age Group</th>
+                    <th>Program Enroll For</th>
+                    <th>Posting Date</th>
                     <th>Action</th>
                   </tr>
                   </tfoot>
@@ -208,4 +201,4 @@ while($result=mysqli_fetch_array($query)){
 </script>
 </body>
 </html>
-<?php ?>
+<?php } ?>
