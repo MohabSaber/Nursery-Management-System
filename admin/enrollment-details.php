@@ -154,4 +154,127 @@ while($result=mysqli_fetch_array($query)){
                   <th>Message</th>
                     <td colspan="3"><?php echo $result['message']?></td>
                   </tr>
+<?php if($result['enrollStatus']!=''):?>
+            <tr>
+                  <th>Program Enroll Status</th>
+                    <td><?php echo $result['enrollStatus']?></td>
+                    <th>Updation date Date</th>
+                    <td><?php echo $result['updationDate']?></td>
+                  </tr>
+
+      <tr>
+                  <th>Official Remark</th>
+                    <td colspan="3"><?php echo $result['officialRemark']?></td>
+                  </tr>
+<?php endif;?>
+<?php if($result['enrollStatus']==''):?>
+<tr>
+  <td colspan="4" style="text-align:center;">
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Take Action</button>
+</td>
+<?php endif;?>
+
+         <?php $cnt++;} ?>
+             
+                  </tbody>
+     
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+<?php include_once('includes/footer.php');?>
+
+
+</div>
+<!-- ./wrapper -->
+
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Update Enrollment Satus</h4>
+      </div>
+      <div class="modal-body">
+        <form name="takeaction" method="post">
+
+          <p><select class="form-control" name="status" required>
+            <option value="">Select Enrollment Status</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Rejected">Rejected</option>
+
+          </select></p>
+        <p><textarea class="form-control" name="officialremak" placeholder="Official Remark" rows="5" required></textarea></p>
+        <input type="submit" class="btn btn-primary" name="submit" value="update">
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+<!-- jQuery -->
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../plugins/jszip/jszip.min.js"></script>
+<script src="../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+</body>
+</html>
+<?php ?>
 
