@@ -1,24 +1,51 @@
-<?php include_once('includes/config.php');
- if(isset($_POST['submit'])){
-$gname=$_POST['gname'];
-$emailid=$_POST['emailid'];
-$cname=$_POST['cname'];
-$cage=$_POST['agegroup'];
-$vtime=$_POST['visittime'];
-$message=$_POST['message'];
+<?php
+include_once('includes/config.php');
 
+class VisitorHandler {
+    private $con;
 
-$query=mysqli_query($con,"insert into tblvisitor(gurdianName,gurdianEmail,childName,childAge,message,visitTime) values('$gname','$emailid','$cname','$cage','$message','$vtime')");
-if($query){
-echo "<script>alert('Details sent successfully.');</script>";
-echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
-} else {
-echo "<script>alert('Something went wrong. Please try again.');</script>";
+    public function __construct($con) {
+        $this->con = $con;
+    }
+
+    public function handleFormSubmission() {
+        if(isset($_POST['submit'])){
+            $gname = $this->sanitizeInput($_POST['gname']);
+            $emailid = $this->sanitizeInput($_POST['emailid']);
+            $cname = $this->sanitizeInput($_POST['cname']);
+            $cage = $this->sanitizeInput($_POST['agegroup']);
+            $vtime = $this->sanitizeInput($_POST['visittime']);
+            $message = $this->sanitizeInput($_POST['message']);
+
+            $query = "INSERT INTO tblvisitor(gurdianName, gurdianEmail, childName, childAge, message, visitTime) VALUES ('$gname','$emailid','$cname','$cage','$message','$vtime')";
+            $result = mysqli_query($this->con, $query);
+
+            if($result){
+                $this->redirect('index.php', 'Details sent successfully.');
+            } else {
+                $this->redirect('index.php', 'Something went wrong. Please try again.');
+            }
+        }
+    }
+
+    private function sanitizeInput($input){
+        // Implement input sanitization logic if required
+        // Example: $input = mysqli_real_escape_string($this->con, $input);
+        return $input;
+    }
+
+    private function redirect($url, $message){
+        echo "<script>alert('$message');</script>";
+        echo "<script type='text/javascript'> document.location = '$url'; </script>";
+        exit();
+    }
 }
 
- }
-
+// Usage
+$visitorHandler = new VisitorHandler($con);
+$visitorHandler->handleFormSubmission();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
