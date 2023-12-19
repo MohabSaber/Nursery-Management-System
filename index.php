@@ -287,3 +287,72 @@ while($result=mysqli_fetch_array($query)){
 <option value="4-5 Year">4-5 Year</option>
 <option value="5-6 Year">5-6 Year</option>
 </select>
+
+                                                    <label for="cage">Child Age</label>
+                                            </div>
+                                        </div>
+
+
+                      <div class="col-sm-6">
+  <label for="cage">Visit Time</label>
+                                        </div>                        
+
+      <div class="col-sm-6">
+                                            <div class="form-floating">
+ <input type="datetime-local" id="visittime" name="visittime" required >
+                                          
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <textarea class="form-control border-0" placeholder="Leave a message here" id="message" style="height: 100px" name="message" required></textarea>
+                                                <label for="message">Message</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn btn-primary w-100 py-3" type="submit" name="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
+                            <div class="position-relative h-100">
+                            <img class="position-absolute w-100 h-100 rounded" src="img/img-1.jpg" style="object-fit: cover;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Appointment End -->
+
+
+   
+
+ 
+
+
+        <!-- Footer Start -->
+     <?php include_once('includes/footer.php');?>
+        <!-- Footer End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
