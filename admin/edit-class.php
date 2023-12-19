@@ -129,3 +129,138 @@ while($row=mysqli_fetch_array($query)){
 <?php } ?>
 
 </select>
+       </div>
+<!--   Class---->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Class name</label>
+                    <input type="text" class="form-control" id="classname" name="classname" placeholder="Class name e.g: Drawing, Dnace, Fun" value="<?php echo $result['className'];?>" required>
+                  </div>
+
+<!--Age Group---->
+<div class="form-group">
+<label for="text">Age Group</label>
+<select class="form-control" id="agegroup" name="agegroup"  required>
+<option value="<?php echo $result['ageGroup'];?>"><?php echo $result['ageGroup'];?></option>
+<option value="18 Month-3 Year">18 Month-2 Year</option>
+<option value="2-3 Year">2-3 Year</option>
+<option value="3-4 Year">3-4 Year</option>
+<option value="4-5 Year">4-5 Year</option>
+<option value="5-6 Year">5-6 Year</option>
+</select>
+</div>
+
+<!--Time---->
+<div class="form-group">
+<label for="text">Class Timing</label>
+<select class="form-control" id="classtiming" name="classtiming"  required>
+<option value="<?php echo $result['classTiming'];?>"><?php echo $result['classTiming'];?></option>
+<option value="8-9 AM">8-9 AM</option>
+<option value="9-10 AM">9-10 AM</option>
+<option value="10-11 AM">10-11 AM</option>
+<option value="11-12 PM">11-12 PM</option>
+<option value="12-1 PM">12-1 PM</option>
+<option value="1-2 PM">1-2 PM</option>
+<option value="2-3 PM">2-3 PM</option>
+<option value="3-4 PM">3-4 PM</option>
+<option value="4-5 PM">4-5 PM</option>
+</select>
+</div>
+
+<!--Capacity---->
+<div class="form-group">
+<label for="text">Capacity</label>
+<select class="form-control" id="capacity" name="capacity"  required>
+<option value="<?php echo $result['capacity'];?>"><?php echo $result['capacity'];?></option>
+<option value="5">5</option>
+<option value="10">10</option>
+<option value="15">15</option>
+<option value="20">20</option>
+<option value="25">25</option>
+<option value="30">30</option>
+<option value="35">35</option>
+<option value="40">40</option>
+<option value="45">45</option>
+<option value="50">50</option>
+</select>
+</div>
+
+
+
+
+
+  <!--Class Pic---->
+  <div class="form-group">
+                    <label for="exampleInputFile">Profile Pic </label>
+               <img src="classpic/<?php echo $result['feacturePic']?>" width="120">
+               <a href="update-class-pic.php?cid=<?php echo $result['classid'];?>">Update Class Pic</a>
+                  </div>
+
+
+<?php } ?>
+
+
+  <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" name="Update" id="submit">Update</button>
+                </div>
+      
+                </div>
+                <!-- /.card-body -->
+          
+            </div>
+            <!-- /.card -->
+          </div>
+          <!--/.col (left) -->
+
+
+
+
+
+
+
+
+    
+              </form>
+       
+  
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+<?php include_once('includes/footer.php');?>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- bs-custom-file-input -->
+<script src="../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script src="../plugins/select2/js/select2.full.min.js"></script>
+<script>
+$(function () {
+  bsCustomFileInput.init();
+});
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+});
+</script>
+</body>
+</html>
+<?php ?>
+
