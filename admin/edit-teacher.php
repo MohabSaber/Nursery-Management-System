@@ -99,3 +99,117 @@ if (strlen($_SESSION['aid']) == 0) {
           <div class="col-md-8">
             <!-- general form elements -->
             <div class="card card-primary">
+
+                <?php
+$teacherid=intval($_GET['tid']);
+$query=mysqli_query($con,"select * from tblteachers where id='$teacherid'");
+$cnt=1;
+while($result=mysqli_fetch_array($query)){
+?>
+
+
+              <div class="card-header">
+                <h3 class="card-title">Persoanl Info</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form name="addlawyer" method="post" enctype="multipart/form-data">
+                <div class="card-body">
+
+<!--  Full Name--->
+   <div class="form-group">
+                    <label for="exampleInputFullname">Full Name</label>
+                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter Teacher Full Name" value="<?php echo $result['fullName']?>" required>
+                  </div>
+<!--   Email---->
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="emailid" name="emailid" value="<?php echo $result['teacherEmail']?>" placeholder="Enter email" required>
+                  </div>
+<!--Number---->
+                  <div class="form-group">
+                    <label for="text">Mobile Number</label>
+                    <input type="text" class="form-control" id="mobilenumber" name="mobilenumber" placeholder="Enter email" pattern="[0-9]{10}" title="10 numeric characters only" value="<?php echo $result['teacherMobileNo']?>" required>
+                  </div>
+
+
+<!--Subject---->
+                  <div class="form-group">
+                    <label for="text">Subject/Designation</label>
+                    <input type="text" class="form-control" id="tsubject" value="<?php echo $result['teacherSubject']?>" name="tsubject" placeholder="Enter Subject/Designation"  required>
+                  </div>
+
+
+
+  <!--Profile Pic---->
+  <div class="form-group">
+                    <label for="exampleInputFile">Profile Pic </label>
+               <img src="teacherspic/<?php echo $result['teacherPic']?>" width="120">
+               <a href="update-teacher-pic.php?tid=<?php echo $result['id'];?>">Update Profile Pic</a>
+                  </div>
+  <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" name="submit" id="submit">Update</button>
+                </div>
+      
+                </div>
+                <!-- /.card-body -->
+ <?php } ?>         
+
+            </div>
+            <!-- /.card -->
+          </div>
+          <!--/.col (left) -->
+
+
+
+
+
+
+
+
+    
+              </form>
+       
+  
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+<?php include_once('includes/footer.php');?>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- bs-custom-file-input -->
+<script src="../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script src="../plugins/select2/js/select2.full.min.js"></script>
+<script>
+$(function () {
+  bsCustomFileInput.init();
+});
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+});
+</script>
+</body>
+</html>
+<?php ?>
+
